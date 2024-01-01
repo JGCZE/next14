@@ -17,6 +17,7 @@ const Links = () => {
     path: "/blog" 
   }];
 
+  // TEMPORARY
   const session = true;
   const isAdmin = true;
 
@@ -26,7 +27,16 @@ const Links = () => {
         return (
           <NavLink item={link} key={link.title}/>
         )
-      })}
+      })}{
+        session? (
+          <>
+            {isAdmin && <NavLink item={{ title: "Admin" , path: "/admin"}} />}
+            <button className={styles.logout}>Log out</button>
+          </>
+        ) : (
+          <NavLink item={{title: "Login", path: "/login" }} />
+        )
+      }
     </div>
   )
 };
