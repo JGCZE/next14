@@ -1,4 +1,5 @@
-import Link from "next/link";
+import styles from "./links.module.css"
+import NavLink from "./navLink/navLink";
 
 const Links = () => {
   const links = [
@@ -16,15 +17,18 @@ const Links = () => {
     path: "/blog" 
   }];
 
-  return <div>
-    {links.map((link) => {
-      return (
-        <Link href={link.path} key={link.title}>
-          {link.title}
-        </Link>
-      )
-    })}
-  </div>;
+  const session = true;
+  const isAdmin = true;
+
+  return (
+    <div className={styles.links}>
+      {links.map((link) => {
+        return (
+          <NavLink item={link} key={link.title}/>
+        )
+      })}
+    </div>
+  )
 };
 
 export default Links;
