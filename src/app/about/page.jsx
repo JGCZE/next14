@@ -2,6 +2,9 @@ import Image from "next/image"
 import styles from "./about.module.css"
 
 const AboutPage = () => {
+
+  console.log("check where its works");
+
   return (
     <div>
       <div className={styles.imgContainer}>
