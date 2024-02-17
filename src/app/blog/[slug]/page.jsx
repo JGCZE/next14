@@ -1,8 +1,18 @@
 import styles from "./singlePost.module.css"
 import Image from "next/image"
 
-const SinglePostPage = ({params}) => {
-  console.log(params);
+const getData = async (slug) => {
+  const res = await fetch(`https://jsonplaceholder.typicode.com/posts/${slug}`);
+
+  if (!res.ok) {
+    throw new Error("Something went wrong");
+  }
+  return res.json();
+};
+
+const SinglePostPage = async ({params}) => {
+  const { slug } = params
+  const post = await getData(slug)
   
   return (
     <div className={styles.container}>
@@ -10,7 +20,7 @@ const SinglePostPage = ({params}) => {
         <Image className={styles.img} src="https://images.pexels.com/photos/19899552/pexels-photo-19899552/free-photo-of-more-rozbresk-krajina-zapad-slunce.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=2" fill alt="" />
       </div>
       <div className={styles.textContainer}>
-        <h1 className={styles.title}>Title</h1>
+        <h1 className={styles.title}>{post.title}</h1>
         <div className={styles.detail}>
           <Image className={styles.avatar} width={50} height={50}  src="https://images.pexels.com/photos/4823732/pexels-photo-4823732.jpeg" alt="" />
             <div className={styles.detailText}>
@@ -23,7 +33,7 @@ const SinglePostPage = ({params}) => {
             </div>
         </div>
         <div className={styles.content}>
-          Lorem ipsum dolor sit amet consectetur adipisicing elit. Adipisci quo officiis, saepe dolorem illum tenetur dolor veniam, cumque corporis perferendis harum, beatae ab earum in sapiente ratione ad facilis quis!
+          {post.body}
         </div>
       </div>
     </div>
