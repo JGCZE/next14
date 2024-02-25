@@ -13,6 +13,6 @@ export const connectToDb = async () => {
     connection.isConnected = db.connections[0].readyState;
   } catch (error) {
     console.log(error);
-    throw New(error, "This is a fucking error bro...!?");
+    throw new Error(error, "This is a fucking error bro...!?");
   }
 }

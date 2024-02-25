@@ -14,6 +14,17 @@ import { getPost } from "@/app/lib/data";
 //   return res.json();
 // };
 
+//SEO STUFF
+export const generateMetadata = async ({ params }) => {
+  const { slug } = params
+  const post = await getPost(slug)
+
+  return {
+    title: post.title,
+    description: post.desc,
+  }
+}
+
 const SinglePostPage = async ({ params }) => {
   const { slug } = params
   const post = await getPost(slug)
