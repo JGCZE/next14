@@ -12,11 +12,11 @@ import { getPosts } from "../lib/data";
 //   return res.json();
 // };
 
-const BlogPage = async ({}) => {
+const BlogPage = async () => {
   //const posts = await getData();
 
   const posts = await getPosts()
-
+console.log(posts)
   return (
     <div className={styles.container}>
       {posts.map((post) => (
