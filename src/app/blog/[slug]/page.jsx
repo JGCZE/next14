@@ -5,19 +5,18 @@ import { Suspense } from "react";
 import { getPost } from "@/app/lib/data";
 
 // Fetch data witch API
-// const getPost = async (slug) => {
-//   const res = await fetch(`http://localhost:3000/api/blog/${slug}`);
+const getData = async (slug) => {
+  const res = await fetch(`http://localhost:3000/api/blog/${slug}`);
 
-//   if (!res.ok) {
-//     throw new Error("Something went wrong");
-//   }
-//   return res.json();
-// };
+  if (!res.ok) {
+    throw new Error("Something went wrong");
+  }
+  return res.json();
+};
 
 //SEO STUFF
 export const generateMetadata = async ({ params }) => {
   const { slug } = params
-  console.log(slug)
   const post = await getPost(slug)
 
   return {
@@ -28,8 +27,9 @@ export const generateMetadata = async ({ params }) => {
 
 const SinglePostPage = async ({ params }) => {
   const { slug } = params
-  const post = await getPost(slug)
-  
+  //const post = await getPost(slug)
+  const post = await getData(slug)
+
   return (
     <div className={styles.container}>
       {post.img && (
