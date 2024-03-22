@@ -1,7 +1,7 @@
 "use server"
 
 import { connectToDb } from "./utils";
-import { Post } from "./models";
+import { Post, User } from "./models";
 import { revalidatePath } from "next/cache";
 import { signIn, signOut } from "@/app/lib/auth";
 
@@ -43,3 +43,44 @@ export const handleGithubLogin = async() => {
 export const handleLogOut = async() => {
   await signOut()
 };
+
+export const register = async (formData) => {
+  const { username, email, password, passwordRepeat } = 
+    Object.fromEntries(formData)
+
+  if(password !== passwordRepeat){
+    return "Password does not match"
+  }
+
+  try {
+    connectToDb()
+    const user = await User.findOne({username})
+
+    if (user){
+      return "already exist"
+    }
+
+    const newUser = new User({
+      username,
+      email,
+      password,
+    })
+    await newUser.save()
+    console.log("user saved");
+  } catch (err){
+    console.log(err);
+    return { error: "something went wrong!"}
+  }
+}
+
+export const login = async (formData) => {
+  const { username, password } = 
+    Object.fromEntries(formData)
+
+  try {
+    await signIn("credentials", { username, password })
+  } catch (err){
+    console.log(err);
+    return { error: "something went wrong!"}
+  }
+}
